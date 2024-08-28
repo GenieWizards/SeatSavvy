@@ -10,7 +10,7 @@ services:
     ports:
       - 3000:3000
     networks:
-      - app_network
+      - seatsavvy
   api:
     container_name: api
     build:
@@ -18,12 +18,12 @@ services:
       dockerfile: ./apps/api/Dockerfile
     restart: always
     ports:
-      - 3001:3001
+      - 5500:5500
     networks:
-      - app_network
+      - seatsavvy
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
-  app_network:
+  seatsavvy:
     external: true
