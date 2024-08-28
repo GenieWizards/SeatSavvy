@@ -15,11 +15,14 @@ const transport = pino.transport({
       options: { destination: "logs/error.log", mkdir: true },
     },
     {
-      target: "pino-pretty",
+      target: "pino-pretty", // To log prettiely
       // options: {
       //   colorize: true,
       // },
     },
+    // {
+    //   target: "pino/file", // To log in JSON in console
+    // },
   ],
 });
 
@@ -28,10 +31,12 @@ export const logger = pino(
     name: "seatsavvy",
     level: env.LOG_LEVEL || "debug",
     formatters: {
-      bindings: () => {
+      bindings: (bindings) => {
         return {
           node_version: process.version,
-          service: "Auth Hono",
+          service: "SeatSavvy",
+          pid: bindings.pid,
+          // host: bindings.hostname,
         };
       },
     },
@@ -41,7 +46,7 @@ export const logger = pino(
       censor: "[PINO REDACTED]",
     },
   },
-  transport
+  transport,
 );
 
 // Error handling

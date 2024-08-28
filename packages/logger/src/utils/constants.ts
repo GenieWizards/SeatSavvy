@@ -5,4 +5,6 @@ export const REDACTED_FIELDS = [
   "user.phone",
   "*.password",
   "password",
+  "email",
+  "*.email",
 ];

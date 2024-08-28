@@ -1,9 +1,9 @@
 import { createServer } from "./server";
 import { logger } from "@seatsavvy/logger";
 
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5500;
 const server = createServer();
 
-server.listen(port, () => {
-  logger.info(`api running on ${port}`);
+server.listen(PORT, () => {
+  logger.info(`api running on ${PORT}`);
 });
