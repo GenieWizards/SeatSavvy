@@ -1,5 +1,5 @@
 {
-  "name": "with-docker",
+  "name": "seatsavvy",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -23,5 +23,11 @@
   "workspaces": [
     "apps/*",
     "packages/*"
+  ],
+  "contributors": [
+    "Shivam Vijaywargi <vijaywargishivam@gmail.com>"
+  ],
+  "maintainers": [
+    "Shivam Vijaywargi <vijaywargishivam@gmail.com>"
   ]
 }
