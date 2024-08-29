@@ -23,6 +23,7 @@
   "devDependencies": {
     "@seatsavvy/eslint-config": "*",
     "@seatsavvy/jest-presets": "*",
+    "@seatsavvy/types": "*",
     "@seatsavvy/typescript-config": "*",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",

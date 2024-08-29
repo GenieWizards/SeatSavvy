@@ -1,0 +1,27 @@
+{
+  "name": "@seatsavvy/types",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "dev": "tsc -w",
+    "lint": "eslint \"src/**/*.ts*\" --max-warnings 0",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@seatsavvy/eslint-config": "*",
+    "@seatsavvy/typescript-config": "*",
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
