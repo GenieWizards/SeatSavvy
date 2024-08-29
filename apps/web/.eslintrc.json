@@ -1,0 +1,8 @@
+{
+  "extends": ["@seatsavvy/eslint-config/next.js"],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
+  }
+}

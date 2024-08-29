@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 // TODO: Example code (Delete Me)
-import type { TTestSchema } from "@seatsavvy/types";
+// import type { TTestSchema } from "@seatsavvy/types";
 
 export const createServer = () => {
   const app = express();
@@ -18,9 +18,9 @@ export const createServer = () => {
       return res.json({ message: `hello ${req.params.name}` });
     })
     .get("/status", (_, res) => {
-      const testSchema: TTestSchema = {
-        name: "John Doe",
-      };
+      // const testSchema: TTestSchema = {
+      //   name: "John Doe",
+      // };
       return res.json({ ok: true });
     });
 
