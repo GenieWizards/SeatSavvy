@@ -31,5 +31,11 @@
   ],
   "maintainers": [
     "Shivam Vijaywargi <vijaywargishivam@gmail.com>"
-  ]
+  ],
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --max-warnings=0",
+      "prettier --write"
+    ]
+  }
 }
