@@ -1,28 +1,42 @@
-import { json, urlencoded } from "body-parser";
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
+import "dotenv/config";
 
-// TODO: Example code (Delete Me)
-// import type { TDemoSchema } from "@seatsavvy/types";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { logger as honoLogger } from "hono/logger";
 
-export const createServer = () => {
-  const app = express();
-  app
-    .disable("x-powered-by")
-    .use(morgan("dev"))
-    .use(urlencoded({ extended: true }))
-    .use(json())
-    .use(cors())
-    .get("/message/:name", (req, res) => {
-      return res.json({ message: `hello ${req.params.name}` });
-    })
-    .get("/status", (_, res) => {
-      // const demoSchema: TDemoSchema = {
-      //   name: "John Doe",
-      // };
-      return res.json({ ok: true });
-    });
+import { logger } from "@seatsavvy/logger";
 
-  return app;
-};
+import { handleError } from "./common/handlers/errors.handler";
+import env from "./env";
+
+const app = new Hono();
+
+app.use(honoLogger());
+
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
+
+// global routes
+app.notFound((c) => {
+  return c.json(
+    {
+      success: false,
+      message: `Route not found ${c.req.path}`,
+    },
+    404,
+  );
+});
+
+app.onError((err, c) => {
+  logger.error(err);
+  return handleError(err, c);
+});
+
+const PORT = env.PORT;
+logger.info(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+
+serve({
+  fetch: app.fetch,
+  port: PORT,
+});
