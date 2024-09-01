@@ -7,7 +7,7 @@ This Turborepo includes the following:
 - `web`: a [Next.js](https://nextjs.org/) app
 - `api`: an [Express](https://expressjs.com/) server
 - `@seatsavvy/ui`: a React component library
-- `@seatsavvy/logger`: Isomorphic logger (a small wrapper around console.log)
+- `@seatsavvy/logger`: PinoJS logger
 - `@seatsavvy/eslint-config`: ESLint presets
 - `@seatsavvy/typescript-config`: tsconfig.json's used throughout the monorepo
 - `@seatsavvy/jest-presets`: Jest configurations
