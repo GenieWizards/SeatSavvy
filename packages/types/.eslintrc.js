@@ -6,5 +6,7 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  ignorePatterns: ["**/__tests__/"],
+  rules: {
+    "no-unused-vars": "off",
+  },
 };
