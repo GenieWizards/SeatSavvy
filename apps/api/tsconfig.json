@@ -1,11 +1,14 @@
 {
-  "extends": "@seatsavvy/typescript-config/base.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "sourceMap": true
-  },
-  "exclude": ["node_modules"],
-  "include": ["src"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+  }
 }

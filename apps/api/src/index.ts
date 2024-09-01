@@ -1,9 +1,15 @@
-import { createServer } from "./server";
-import { logger } from "@seatsavvy/logger";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 
-const PORT = process.env.PORT || 5500;
-const server = createServer();
+const app = new Hono();
 
-server.listen(PORT, () => {
-  logger.info(`api running on ${PORT}`);
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
+
+const port = 5500;
+
+serve({
+  fetch: app.fetch,
+  port,
 });
