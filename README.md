@@ -1,11 +1,11 @@
 ## What's inside?
 
-This Turborepo includes the following:
+This SeatSavvy repo includes the following:
 
 ### Apps and Packages
 
 - `web`: a [Next.js](https://nextjs.org/) app
-- `api`: an [Express](https://expressjs.com/) server
+- `api`: an [HonoJS](https://hono.dev/) server
 - `@seatsavvy/ui`: a React component library
 - `@seatsavvy/logger`: PinoJS logger
 - `@seatsavvy/eslint-config`: ESLint presets
@@ -16,11 +16,11 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ```
 # Install dependencies
-yarn install
+npm install
 
 # Create a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
-docker network create app_network
+docker network create seatsavvy_network
 
 # Build prod using new BuildKit engine
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
