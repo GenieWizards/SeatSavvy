@@ -28,6 +28,8 @@ export function codeToStatus(code: z.infer<typeof ErrorCode>): StatusCode {
       return 429;
     case HTTP_STATUS.INTERNAL_SERVER_ERROR:
       return 500;
+    default:
+      return 500;
   }
 }
 
