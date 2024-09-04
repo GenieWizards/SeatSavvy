@@ -1,3 +1,5 @@
+# SeatSavvy
+
 ## What's inside?
 
 This SeatSavvy repo includes the following:
@@ -14,7 +16,7 @@ This SeatSavvy repo includes the following:
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-```
+```bash
 # Install dependencies
 npm install
 
@@ -33,7 +35,7 @@ Open <http://localhost:3000>.
 
 To shutdown all running containers:
 
-```
+```bash
 # Stop all running containers
 docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
 ```
