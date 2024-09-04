@@ -5,12 +5,12 @@ import { Hono } from "hono";
 import { logger as honoLogger } from "hono/logger";
 
 import { logger } from "@seatsavvy/logger";
-import { HTTP_CODE, HTTP_STATUS } from "@seatsavvy/types";
+import { HTTP_CODE } from "@seatsavvy/types";
 
 import { handleError } from "./common/handlers/errors.handler";
-import { AppError } from "./common/utils/appErr.util";
 import { init, cors } from "./common/middlewares";
 import env from "./env";
+import { showRoutes } from "hono/dev";
 
 const app = new Hono();
 
@@ -25,10 +25,6 @@ app.use("*", init());
 app.onError(handleError);
 
 app.get("/", (c) => {
-  throw new AppError({
-    code: HTTP_STATUS.INTERNAL_SERVER_ERROR,
-    message: "This is a test error",
-  });
   return c.text("Hello Hono!");
 });
 
@@ -52,6 +48,9 @@ app.notFound((c) => {
     HTTP_CODE.NOT_FOUND,
   );
 });
+
+if (env.NODE_ENV === "development")
+  showRoutes(app, { verbose: true, colorize: true });
 
 const PORT = env.PORT;
 logger.info(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
