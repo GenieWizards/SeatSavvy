@@ -9,18 +9,27 @@
     "dev": "NODE_ENV=development tsx watch src/server.ts",
     "lint": "tsc --noEmit && eslint \"src/**/*.ts*\" --max-warnings 0",
     "start": "NODE_ENV=production node dist/server.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.2",
     "@hono/zod-validator": "^0.2.2",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "better-sqlite3": "^11.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
     "hono": "^4.5.10",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^20.11.17",
+    "drizzle-kit": "^0.24.2",
+    "eslint-plugin-drizzle": "^0.2.3",
     "tsx": "^4.7.1"
   }
 }
