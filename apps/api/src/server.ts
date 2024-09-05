@@ -52,10 +52,11 @@ app.notFound((c) => {
 if (env.NODE_ENV === "development")
   showRoutes(app, { verbose: true, colorize: true });
 
-const PORT = env.PORT;
-logger.info(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+logger.info(
+  `Server running on port ${env.PORT} in ${process.env.NODE_ENV} mode`,
+);
 
 serve({
   fetch: app.fetch,
-  port: PORT,
+  port: env.PORT,
 });
