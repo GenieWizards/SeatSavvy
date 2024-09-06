@@ -1,7 +1,7 @@
 import pino from "pino";
 
-import { REDACTED_FIELDS } from "./utils/constants";
 import env from "./env";
+import { REDACTED_FIELDS } from "./utils/constants";
 
 const transport = pino.transport({
   targets: [

@@ -1,4 +1,5 @@
-import { ZodError, z } from "zod";
+import { z, ZodError } from "zod";
+
 import { logger } from "./index";
 
 const EnvSchema = z.object({

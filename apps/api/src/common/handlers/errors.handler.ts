@@ -1,12 +1,11 @@
+import { logger } from "@seatsavvy/logger";
+import { type ErrorSchema, HTTP_CODE, HTTP_STATUS } from "@seatsavvy/types";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { ZodError, type z } from "zod";
+import { type z, ZodError } from "zod";
 
-import { logger } from "@seatsavvy/logger";
-import { HTTP_CODE, HTTP_STATUS, type ErrorSchema } from "@seatsavvy/types";
-
-import { statusToCode } from "../utils/httpStatusCodes.util";
 import { AppError } from "../utils/appErr.util";
+import { statusToCode } from "../utils/httpStatusCodes.util";
 
 export function handleError(err: Error, c: Context): Response {
   /**

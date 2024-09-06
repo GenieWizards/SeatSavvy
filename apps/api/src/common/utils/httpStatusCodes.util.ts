@@ -1,8 +1,7 @@
-import type { StatusCode } from "hono/utils/http-status";
-import type { z } from "zod";
-
 import type { ErrorCode } from "@seatsavvy/types";
 import { HTTP_STATUS } from "@seatsavvy/types";
+import type { StatusCode } from "hono/utils/http-status";
+import type { z } from "zod";
 
 export function codeToStatus(code: z.infer<typeof ErrorCode>): StatusCode {
   switch (code) {

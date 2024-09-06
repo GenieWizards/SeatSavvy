@@ -11,6 +11,7 @@ module.exports = {
     "turbo",
     "plugin:@next/next/recommended",
     "plugin:prettier/recommended",
+    "plugin:import/recommended",
   ],
   rules: {
     "prettier/prettier": [
@@ -93,8 +94,7 @@ module.exports = {
         "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
         "no-console": "warn",
         "tailwindcss/no-custom-classname": "off",
-        "tailwindcss/classnames-order": "off",
-        "@next/next/no-html-link-for-pages": ["error", "app/"],
+        // "@next/next/no-html-link-for-pages": ["error", "app/"],
       },
     },
   ],

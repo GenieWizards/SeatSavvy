@@ -1,15 +1,14 @@
 import "dotenv/config";
 
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
-import { logger as honoLogger } from "hono/logger";
-import { showRoutes } from "hono/dev";
-
 import { logger } from "@seatsavvy/logger";
 import { HTTP_CODE } from "@seatsavvy/types";
+import { Hono } from "hono";
+import { showRoutes } from "hono/dev";
+import { logger as honoLogger } from "hono/logger";
 
 import { handleError } from "./common/handlers/errors.handler";
-import { init, cors } from "./common/middlewares";
+import { cors, init } from "./common/middlewares";
 import env from "./env";
 
 const app = new Hono();

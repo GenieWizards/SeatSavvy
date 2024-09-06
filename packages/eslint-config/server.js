@@ -1,5 +1,15 @@
+const { resolve } = require("node:path");
+
+const project = resolve(process.cwd(), "tsconfig.json");
+
 module.exports = {
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "prettier",
+    "plugin:prettier/recommended",
+  ],
   env: {
     node: true,
     es6: true,
@@ -9,7 +19,14 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "unused-imports", "simple-import-sort"],
+  settings: {
+    "import/resolver": {
+      typescript: {
+        project,
+      },
+    },
+  },
   overrides: [
     {
       files: ["**/__tests__/**/*"],
@@ -19,16 +36,16 @@ module.exports = {
     },
   ],
   rules: {
-    // "prettier/prettier": [
-    //   "error",
-    //   {
-    //     singleQuote: false,
-    //     endOfLine: "auto",
-    //     printWidth: 80,
-    //     tabWidth: 2,
-    //     semi: true,
-    //   },
-    // ],
+    "prettier/prettier": [
+      "error",
+      {
+        singleQuote: false,
+        endOfLine: "auto",
+        printWidth: 80,
+        tabWidth: 2,
+        semi: true,
+      },
+    ],
     "no-console": "warn",
     "no-undef": "off",
     "consistent-return": "off",
@@ -37,8 +54,8 @@ module.exports = {
     "no-unused-vars": "warn",
     "@typescript-eslint/comma-dangle": "off",
     "@typescript-eslint/consistent-type-imports": "error",
-    // "simple-import-sort/imports": "error",
-    // "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "@typescript-eslint/no-unused-vars": "warn",
     // "unused-imports/no-unused-imports": "error",
     // "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
