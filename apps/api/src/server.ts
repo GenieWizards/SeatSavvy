@@ -9,7 +9,7 @@ import { logger as honoLogger } from "hono/logger";
 
 import { handleError } from "./common/handlers/errors.handler";
 import { cors, init } from "./common/middlewares";
-import env from "./env";
+import { env } from "./env";
 
 const app = new Hono();
 

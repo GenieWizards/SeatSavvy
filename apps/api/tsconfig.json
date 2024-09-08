@@ -13,7 +13,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "outDir": "./dist",
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "strictNullChecks": true /* When type checking, take into account `null` and `undefined`. */,
@@ -23,8 +23,16 @@
     "useUnknownInCatchVariables": true /* Type catch clause variables as 'unknown' instead of 'any'. */,
     "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
     "noUnusedLocals": true /* Enable error reporting when a local variables aren't read. */,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "$/*": ["./*"]
+    }
   },
   "exclude": ["node_modules", "__tests__"],
-  "include": ["src"]
+  "include": ["src"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
+  }
 }

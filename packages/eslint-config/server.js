@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
+    "plugin:import/typescript",
     "prettier",
     "plugin:prettier/recommended",
   ],
@@ -19,7 +20,12 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "unused-imports", "simple-import-sort"],
+  plugins: [
+    "@typescript-eslint",
+    "unused-imports",
+    "simple-import-sort",
+    "import",
+  ],
   settings: {
     "import/resolver": {
       typescript: {
@@ -57,6 +63,7 @@ module.exports = {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "@typescript-eslint/no-unused-vars": "warn",
+    "import/no-unresolved": "off",
     // "unused-imports/no-unused-imports": "error",
     // "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
   },

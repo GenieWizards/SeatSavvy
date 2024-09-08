@@ -1,20 +1,18 @@
 import { createId } from "@paralleldrive/cuid2";
-import { sql } from "drizzle-orm";
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-const userSchema = sqliteTable("users", {
+const userSchema = pgTable("users", {
   id: text("id")
     .$defaultFn(() => createId())
     .primaryKey()
     .notNull(),
-  email: text("email").notNull().unique(),
-  username: text("username").notNull().unique(),
-  fullName: text("name"),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  fullName: varchar("name", { length: 255 }),
+  password: varchar("password", { length: 255 }),
 
-  createdAt: text("created_at")
-    .notNull()
-    .default(sql`(CURRENT_TIMESTAMP)`),
-  updatedAt: text("updated_at"),
+  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });
 
 export default userSchema;
