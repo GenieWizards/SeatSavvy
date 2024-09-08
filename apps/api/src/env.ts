@@ -1,10 +1,20 @@
 import { logger } from "@seatsavvy/logger";
 import { z, ZodError } from "zod";
 
+const stringBoolean = z.coerce
+  .string()
+  .transform((val) => {
+    return val === "true";
+  })
+  .default("false");
+
 const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
   LOG_LEVEL: z.string().default("debug"),
-  PORT: z.number().default(5500),
+  PORT: z.coerce.number().default(5500),
+  DB_URL: z.string().default("postgres://root:root@localhost:5432/seatsavvy"),
+  DB_MIGRATING: stringBoolean,
+  DB_SEEDING: stringBoolean,
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;
@@ -25,4 +35,4 @@ try {
   }
 }
 
-export default EnvSchema.parse(process.env);
+export const env = EnvSchema.parse(process.env);

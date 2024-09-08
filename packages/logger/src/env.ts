@@ -4,7 +4,9 @@ import { logger } from "./index";
 
 const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
-  LOG_LEVEL: z.string().default("debug"),
+  LOG_LEVEL: z
+    .enum(["debug", "info", "warn", "error", "production"])
+    .default("debug"),
 });
 
 export type TEnvSchema = z.infer<typeof EnvSchema>;

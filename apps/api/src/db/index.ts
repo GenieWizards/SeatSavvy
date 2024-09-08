@@ -1,15 +1,17 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
+import { env } from "../env";
 import * as schema from "./schema";
 
-const sqlite = new Database("sqlite.db");
+export const connection = postgres(env.DB_URL, {
+  max: env.DB_MIGRATING || env.DB_SEEDING ? 1 : undefined,
+  onnotice: env.DB_SEEDING ? () => {} : undefined,
+});
 
-export const db = drizzle(sqlite, {
+export const db = drizzle(connection, {
   schema,
   logger: true,
 });
 
-export function closeConnection() {
-  sqlite.close();
-}
+export type TDb = typeof db;
