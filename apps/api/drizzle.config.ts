@@ -5,7 +5,7 @@ export default defineConfig({
   dialect: "sqlite",
   out: "./src/db/migrations",
   dbCredentials: {
-    url: "./sqlite.db",
+    url: ".src/db/seatsavvy.db",
   },
   verbose: true,
   strict: true,
