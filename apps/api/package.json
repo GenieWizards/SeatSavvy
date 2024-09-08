@@ -23,6 +23,7 @@
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "hono": "^4.5.10",
+    "postgres": "^3.4.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {

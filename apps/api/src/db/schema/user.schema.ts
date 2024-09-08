@@ -9,7 +9,7 @@ const userSchema = sqliteTable("users", {
     .notNull(),
   email: text("email").notNull().unique(),
   username: text("username").notNull().unique(),
-  fullName: text("name"),
+  fullName: text("full_name"),
   password: text("password").notNull(),
 
   createdAt: text("created_at")
