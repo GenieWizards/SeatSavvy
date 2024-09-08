@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { HTTP_STATUS } from "./enums";
+import { HTTP_STATUS } from "./enums/http.enums";
 
 export const ErrorCode = z.nativeEnum(HTTP_STATUS);
 
