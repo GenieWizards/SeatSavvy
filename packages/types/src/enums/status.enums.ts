@@ -5,3 +5,11 @@ export enum ShowSeatStatus {
 }
 
 export const showSeatStatus = ["Available", "Booked", "Unavailable"] as const;
+
+export enum BookingStatus {
+  Pending = "Pending",
+  Completed = "Completed",
+  Failed = "Failed",
+}
+
+export const bookingStatus = ["Pending", "Completed", "Failed"] as const;
