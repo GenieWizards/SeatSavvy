@@ -8,7 +8,7 @@ const userSchema = pgTable("users", {
     .notNull(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   username: varchar("username", { length: 255 }).notNull().unique(),
-  fullName: varchar("name", { length: 255 }),
+  fullName: varchar("full_name", { length: 255 }),
   password: varchar("password", { length: 255 }),
 
   createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
