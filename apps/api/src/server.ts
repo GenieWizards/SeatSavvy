@@ -10,6 +10,7 @@ import { logger as honoLogger } from "hono/logger";
 import { handleError } from "./common/handlers/errors.handler";
 import { cors, init } from "./common/middlewares";
 import { env } from "./env";
+import { userRoutes } from "./modules/user/user.route";
 
 const app = new Hono();
 
@@ -23,10 +24,6 @@ app.use("*", init());
 // Global Error handler
 app.onError(handleError);
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
-
 app.get("/ping", (c) => {
   return c.json(
     {
@@ -36,6 +33,8 @@ app.get("/ping", (c) => {
     HTTP_CODE.OK,
   );
 });
+
+app.route("/api/v1/users", userRoutes);
 
 // global routes
 app.notFound((c) => {
