@@ -4,4 +4,5 @@ export * from "./enums/http.enums";
 export * from "./enums/location.enums";
 export * from "./enums/media.enums";
 export * from "./enums/status.enums";
-export * from "./error.schema";
+export * from "./validations/error.validations";
+export * from "./validations/user.validations";
