@@ -10,7 +10,12 @@ const findByUsernameOrEmail = async (data: TCreateUserBodyResponse) => {
   const userExists = await db
     .select()
     .from(userSchema)
-    .where(or(eq(userSchema.email, email), eq(userSchema.username, username)));
+    .where(
+      or(
+        eq(userSchema.email, email.toLowerCase()),
+        eq(userSchema.username, username.toLowerCase()),
+      ),
+    );
 
   return userExists;
 };
