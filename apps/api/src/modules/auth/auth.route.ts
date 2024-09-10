@@ -33,9 +33,7 @@ authRoutes.post(
       });
     }
 
-    if (payload?.password) {
-      payload.password = await hash(payload.password, 10);
-    }
+    payload.password = await hash(payload.password, 10);
 
     const user = await authRepository.create(payload);
 
