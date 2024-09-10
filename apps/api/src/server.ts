@@ -10,7 +10,7 @@ import { logger as honoLogger } from "hono/logger";
 import { handleError } from "./common/handlers/errors.handler";
 import { cors, init } from "./common/middlewares";
 import { env } from "./env";
-import { userRoutes } from "./modules/user/user.route";
+import { authRoutes } from "./modules/auth/auth.route";
 
 const app = new Hono();
 
@@ -34,7 +34,7 @@ app.get("/ping", (c) => {
   );
 });
 
-app.route("/api/v1/users", userRoutes);
+app.route("/api/v1/auth", authRoutes);
 
 // global routes
 app.notFound((c) => {
