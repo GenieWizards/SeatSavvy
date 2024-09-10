@@ -3,6 +3,7 @@ import { eq, or } from "drizzle-orm";
 
 import { db } from "@/db";
 import { userSchema } from "@/db/schema";
+import { lower } from "@/db/schema/user.schema";
 
 const findByUsernameOrEmail = async (data: TCreateUserBodyResponse) => {
   const { email, username } = data;
@@ -12,7 +13,7 @@ const findByUsernameOrEmail = async (data: TCreateUserBodyResponse) => {
     .from(userSchema)
     .where(
       or(
-        eq(userSchema.email, email.toLowerCase()),
+        eq(lower(userSchema.email), email.toLowerCase()),
         eq(userSchema.username, username.toLowerCase()),
       ),
     );
