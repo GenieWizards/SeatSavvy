@@ -1,4 +1,11 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.formatDocument": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortImports": "explicit"
+  }
 }
