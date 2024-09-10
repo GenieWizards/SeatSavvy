@@ -57,7 +57,7 @@ authRoutes.post(
         message: "User created successfully",
         data: user[0],
       },
-      HTTP_CODE.OK,
+      HTTP_CODE.CREATED,
     );
   },
 );
