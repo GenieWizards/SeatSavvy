@@ -2,12 +2,18 @@ import { createId } from "@paralleldrive/cuid2";
 import type { SQL } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
-import { pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 const userSchema = pgTable(
   "users",
   {
-    id: varchar("id", { length: 255 })
+    id: text("id")
       .$defaultFn(() => createId())
       .primaryKey()
       .notNull(),

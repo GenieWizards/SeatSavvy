@@ -8,18 +8,21 @@ import { showRoutes } from "hono/dev";
 import { logger as honoLogger } from "hono/logger";
 
 import { handleError } from "./common/handlers/errors.handler";
-import { cors, init } from "./common/middlewares";
+import type { Context } from "./common/middlewares";
+import { authMiddleware, cors, csrf, init } from "./common/middlewares";
 import { env } from "./env";
 import { authRoutes } from "./modules/auth/auth.route";
 
-const app = new Hono();
+const app = new Hono<Context>();
 
 // Built-In middlewares
 app.use(honoLogger());
+app.use(csrf());
 app.use("*", cors());
 
 // Custom middlewares
 app.use("*", init());
+app.use("*", authMiddleware());
 
 // Global Error handler
 app.onError(handleError);

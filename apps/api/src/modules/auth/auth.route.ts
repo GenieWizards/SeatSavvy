@@ -3,11 +3,13 @@ import { CreateUserBodySchema, HTTP_CODE, HTTP_STATUS } from "@seatsavvy/types";
 import { hash } from "bcrypt";
 import { Hono } from "hono";
 
+import { lucia } from "@/common/lib/luciaAdapter.lib";
+import type { Context } from "@/common/middlewares";
 import { AppError } from "@/common/utils/appErr.util";
 
 import authRepository from "./auth.repository";
 
-export const authRoutes = new Hono();
+export const authRoutes = new Hono<Context>();
 
 /**
  * Registers a new user.
@@ -43,6 +45,11 @@ authRoutes.post(
         message: "Something went wrong, please try again",
       });
     }
+
+    const session = await lucia.createSession(user[0].id, {});
+    c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), {
+      append: true,
+    });
 
     /**
      * This is done to remove the password in the response and will not affect anything in DB
