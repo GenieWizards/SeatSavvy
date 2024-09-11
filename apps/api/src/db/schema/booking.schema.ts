@@ -13,7 +13,7 @@ import userSchema from "./user.schema";
 
 export const bookingStatusEnum = pgEnum("status", bookingStatus);
 
-const bookingSchema = pgTable("payments", {
+const bookingSchema = pgTable("bookings", {
   id: varchar("id", { length: 255 })
     .$defaultFn(() => createId())
     .primaryKey()

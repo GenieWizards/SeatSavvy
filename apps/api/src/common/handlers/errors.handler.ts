@@ -55,7 +55,7 @@ export function handleError(err: Error, c: Context): Response {
       {
         error: {
           code: err.code,
-          docs: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${err.code}`,
+          docs: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${err.status}`,
           message: err.message,
           requestId: c.get("requestId"),
         },
@@ -84,7 +84,7 @@ export function handleError(err: Error, c: Context): Response {
       {
         error: {
           code,
-          docs: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${code}`,
+          docs: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${err.status}`,
           message: err.message,
           requestId: c.get("requestId"),
         },

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "SeatSavvy",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

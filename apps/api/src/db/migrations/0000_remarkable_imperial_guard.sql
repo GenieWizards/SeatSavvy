@@ -10,13 +10,13 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "payments" (
+CREATE TABLE IF NOT EXISTS "bookings" (
 	"id" varchar(255) PRIMARY KEY NOT NULL,
-	"price" real NOT NULL,
-	"paid_at" timestamp DEFAULT now() NOT NULL,
-	"transaction_id" varchar(255) NOT NULL,
-	"payment_method" varchar(255) NOT NULL,
-	"booking_id" varchar(255) NOT NULL,
+	"num_of_seats" integer NOT NULL,
+	"booked_at" timestamp DEFAULT now() NOT NULL,
+	"status" "status" NOT NULL,
+	"user_id" varchar(255) NOT NULL,
+	"show_id" varchar(255) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -60,7 +60,34 @@ CREATE TABLE IF NOT EXISTS "medias" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "payments" (
+	"id" varchar(255) PRIMARY KEY NOT NULL,
+	"price" real NOT NULL,
+	"paid_at" timestamp DEFAULT now() NOT NULL,
+	"transaction_id" varchar(255) NOT NULL,
+	"payment_method" varchar(255) NOT NULL,
+	"booking_id" varchar(255) NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "sessions" (
+	"id" text PRIMARY KEY NOT NULL,
+	"user_id" varchar NOT NULL,
+	"expires_at" timestamp NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "shows" (
+	"id" varchar(255) PRIMARY KEY NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"start_date" timestamp NOT NULL,
+	"end_date" timestamp NOT NULL,
+	"event_id" varchar(255),
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "show_seats" (
 	"id" varchar(255) PRIMARY KEY NOT NULL,
 	"seat_no" varchar(255) NOT NULL,
 	"price" real NOT NULL,
@@ -105,16 +132,28 @@ CREATE TABLE IF NOT EXISTS "theatre_to_city" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
-	"id" varchar(255) PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"email" varchar(255) NOT NULL,
 	"username" varchar(255) NOT NULL,
-	"name" varchar(255),
+	"full_name" varchar(255),
 	"password" varchar(255),
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email"),
 	CONSTRAINT "users_username_unique" UNIQUE("username")
 );
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "bookings" ADD CONSTRAINT "bookings_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "bookings" ADD CONSTRAINT "bookings_show_id_shows_id_fk" FOREIGN KEY ("show_id") REFERENCES "public"."shows"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "events" ADD CONSTRAINT "events_theatre_hall_id_theatre_halls_id_fk" FOREIGN KEY ("theatre_hall_id") REFERENCES "public"."theatre_halls"("id") ON DELETE no action ON UPDATE no action;
@@ -135,7 +174,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "shows" ADD CONSTRAINT "shows_theatre_seat_id_theatre_seats_id_fk" FOREIGN KEY ("theatre_seat_id") REFERENCES "public"."theatre_seats"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE cascade;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "shows" ADD CONSTRAINT "shows_event_id_events_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."events"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "show_seats" ADD CONSTRAINT "show_seats_theatre_seat_id_theatre_seats_id_fk" FOREIGN KEY ("theatre_seat_id") REFERENCES "public"."theatre_seats"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -163,3 +214,5 @@ DO $$ BEGIN
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
+--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "emailUniqueIndex" ON "users" USING btree (lower("email"));

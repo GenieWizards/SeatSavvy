@@ -6,7 +6,7 @@ import theatreSeatSchema from "./theatreSeat.schema";
 
 export const seatStatusEnum = pgEnum("status", showSeatStatus);
 
-const showSeatSchema = pgTable("shows", {
+const showSeatSchema = pgTable("show_seats", {
   id: varchar("id", { length: 255 })
     .$defaultFn(() => createId())
     .primaryKey()

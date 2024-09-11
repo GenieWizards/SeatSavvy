@@ -32,8 +32,7 @@ export const CreateUserBodySchema = z.object({
       required_error: "password is required",
     })
     .min(8, "Password should be atleast 8 characters")
-    .max(50, "Password cannot be longer than 50 characters")
-    .optional(),
+    .max(50, "Password cannot be longer than 50 characters"),
 });
 
 export type TCreateUserBodyResponse = z.infer<typeof CreateUserBodySchema>;
