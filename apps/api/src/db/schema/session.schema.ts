@@ -6,7 +6,10 @@ const sessionSchema = pgTable("sessions", {
   id: text("id").primaryKey(),
   userId: varchar("user_id")
     .notNull()
-    .references(() => userSchema.id),
+    .references(() => userSchema.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   expiresAt: timestamp("expires_at", {
     mode: "date",
   }).notNull(),
