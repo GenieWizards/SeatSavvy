@@ -45,19 +45,16 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Build project
-      run: npm run build
+    - name: Build packages
+      run: |
+        npm run build --workspace=packages/logger
+        npm run build --workspace=packages/types
 
-    # - name: Build packages
-    #   run: |
-    #     npm run build --workspace=packages/logger
-    #     npm run build --workspace=packages/types
+    - name: Build API
+      run: npm run build --workspace=apps/api
 
-    # - name: Build API
-    #   run: npm run build --workspace=apps/api
-
-    # - name: Build Web
-    #   run: npm run build --workspace=apps/web
+    - name: Build Web
+      run: npm run build --workspace=apps/web
 
     # - name: Run tests
     #   run: npm test
