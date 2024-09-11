@@ -17,6 +17,9 @@ This SeatSavvy repo includes the following:
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ```bash
+# set node version using nvm
+nvm use
+
 # Install dependencies
 npm install
 
