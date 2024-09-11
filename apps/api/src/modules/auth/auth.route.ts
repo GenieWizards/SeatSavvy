@@ -1,11 +1,17 @@
 import { zValidator } from "@hono/zod-validator";
-import { CreateUserBodySchema, HTTP_CODE, HTTP_STATUS } from "@seatsavvy/types";
-import { hash } from "bcrypt";
+import {
+  CreateUserBodySchema,
+  HTTP_CODE,
+  HTTP_STATUS,
+  LoginUserBodySchema,
+} from "@seatsavvy/types";
+import { compare, hash } from "bcrypt";
 import { Hono } from "hono";
 
 import { lucia } from "@/common/lib/luciaAdapter.lib";
 import type { Context } from "@/common/middlewares";
 import { AppError } from "@/common/utils/appErr.util";
+import type { TSelectUserSchema } from "@/db/schema/user.schema";
 
 import authRepository from "./auth.repository";
 
@@ -63,6 +69,85 @@ authRoutes.post(
         data: user[0],
       },
       HTTP_CODE.CREATED,
+    );
+  },
+);
+
+/**
+ * Login user.
+ *
+ * Validates the request payload, sets session token in cookie and returns the user data.
+ *
+ * @route POST /api/v1/auth/login
+ * @param {Object} c - HonoJS context object.
+ * @returns JSON response with success or error message.
+ */
+authRoutes.post(
+  "/login",
+  zValidator("json", LoginUserBodySchema),
+  async (c) => {
+    const userSession = c.get("user");
+
+    let userExists: TSelectUserSchema[];
+    const payload = c.req.valid("json");
+
+    if (userSession) {
+      userExists = await authRepository.findByUsernameOrEmail(payload);
+
+      return c.json(
+        {
+          success: true,
+          message: "Already logged in",
+          data: {
+            id: userExists[0].id,
+            username: userExists[0].username,
+            email: userExists[0].email,
+            fullName: userExists[0].fullName,
+          },
+        },
+        HTTP_CODE.OK,
+      );
+    }
+
+    userExists = await authRepository.findByUsernameOrEmail(payload);
+
+    if (!userExists?.length) {
+      throw new AppError({
+        code: HTTP_STATUS.UNAUTHORIZED,
+        message: "Invalid credentials or user does not exist",
+      });
+    }
+
+    const passwordMatch = await compare(
+      payload.password,
+      userExists[0].password || "",
+    );
+
+    if (!passwordMatch) {
+      throw new AppError({
+        code: HTTP_STATUS.UNAUTHORIZED,
+        message: "Invalid credentials or user does not exist",
+      });
+    }
+
+    const session = await lucia.createSession(userExists[0].id, {});
+
+    c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), {
+      append: true,
+    });
+
+    return c.json(
+      {
+        success: true,
+        message: "User logged in successfully",
+        data: {
+          id: userExists[0].id,
+          username: userExists[0].username,
+          email: userExists[0].email,
+          fullName: userExists[0].fullName,
+        },
+      },
+      HTTP_CODE.OK,
     );
   },
 );

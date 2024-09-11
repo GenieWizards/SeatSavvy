@@ -9,6 +9,8 @@ import {
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createSelectSchema } from "drizzle-zod";
+import type { z } from "zod";
 
 const userSchema = pgTable(
   "users",
@@ -35,6 +37,11 @@ const userSchema = pgTable(
 );
 
 export default userSchema;
+
+// Schema for selecting a user - can be used to validate API responses
+export const selectUserSchema = createSelectSchema(userSchema);
+
+export type TSelectUserSchema = z.infer<typeof selectUserSchema>;
 
 // custom lower function
 export function lower(email: AnyPgColumn): SQL {

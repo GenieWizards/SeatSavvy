@@ -15,6 +15,7 @@ const EnvSchema = z.object({
   DB_URL: z.string().default("postgres://root:root@localhost:5432/seatsavvy"),
   DB_MIGRATING: stringBoolean,
   DB_SEEDING: stringBoolean,
+  CLIENT_URL: z.string().url(),
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;

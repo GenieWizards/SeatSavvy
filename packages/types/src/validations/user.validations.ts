@@ -35,4 +35,18 @@ export const CreateUserBodySchema = z.object({
     .max(50, "Password cannot be longer than 50 characters"),
 });
 
+export const LoginUserBodySchema = CreateUserBodySchema.omit({
+  fullName: true,
+}).extend({
+  username: z
+    .string({
+      required_error: "username/email is required",
+    })
+    .trim()
+    .min(5, "username should be atleast 5 characters")
+    .toLowerCase(),
+  email: z.string().email("Invalid email address").optional(),
+});
+
 export type TCreateUserBodyResponse = z.infer<typeof CreateUserBodySchema>;
+export type TLoginUserBodyResponse = z.infer<typeof LoginUserBodySchema>;
