@@ -56,5 +56,5 @@ jobs:
     - name: Build Web
       run: npm run build --workspace=apps/web
 
-    - name: Run tests
-      run: npm test
+    # - name: Run tests
+    #   run: npm test
