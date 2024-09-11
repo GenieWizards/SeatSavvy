@@ -151,3 +151,28 @@ authRoutes.post(
     );
   },
 );
+
+/**
+ * Logout user.
+ *
+ * Removes the session token from the cookie.
+ *
+ * @route POST /api/v1/auth/logout
+ * @param {Object} c - HonoJS context object.
+ * @returns NA
+ */
+authRoutes.post("/logout", async (c) => {
+  const session = c.get("session");
+
+  if (!session) {
+    return c.body(null, HTTP_CODE.UNAUTHORIZED);
+  }
+
+  await lucia.invalidateSession(session.id);
+
+  c.header("Set-Cookie", lucia.createBlankSessionCookie().serialize(), {
+    append: true,
+  });
+
+  return c.body(null, HTTP_CODE.NO_CONTENT);
+});
