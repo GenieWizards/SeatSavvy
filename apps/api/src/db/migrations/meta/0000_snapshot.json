@@ -1,5 +1,5 @@
 {
-  "id": "d005063a-b9ae-429f-974d-62f31cbe9b70",
+  "id": "80df4a6d-7bfb-4a5d-a71d-592c42030b14",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -857,6 +857,14 @@
           "primaryKey": false,
           "notNull": false
         },
+        "role": {
+          "name": "role",
+          "type": "status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'user'"
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -914,9 +922,8 @@
       "name": "status",
       "schema": "public",
       "values": [
-        "Available",
-        "Booked",
-        "Unavailable"
+        "user",
+        "admin"
       ]
     },
     "public.type": {

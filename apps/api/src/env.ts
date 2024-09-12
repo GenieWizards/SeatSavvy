@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { logger } from "@seatsavvy/logger";
 import { z, ZodError } from "zod";
 

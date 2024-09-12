@@ -1,3 +1,4 @@
+// NOTE: If updating values update in both
 export enum ShowSeatStatus {
   Available = "Available",
   Booked = "Booked",

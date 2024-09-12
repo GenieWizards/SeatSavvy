@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import { serve } from "@hono/node-server";
 import { logger } from "@seatsavvy/logger";
 import { HTTP_CODE } from "@seatsavvy/types";
@@ -53,9 +51,7 @@ app.notFound((c) => {
 if (env.NODE_ENV === "development")
   showRoutes(app, { verbose: true, colorize: true });
 
-logger.info(
-  `Server running on port ${env.PORT} in ${process.env.NODE_ENV} mode`,
-);
+logger.info(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
 
 serve({
   fetch: app.fetch,
