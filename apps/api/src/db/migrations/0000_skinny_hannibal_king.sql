@@ -1,5 +1,5 @@
 DO $$ BEGIN
- CREATE TYPE "public"."status" AS ENUM('Available', 'Booked', 'Unavailable');
+ CREATE TYPE "public"."status" AS ENUM('user', 'admin');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -137,6 +137,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"username" varchar(255) NOT NULL,
 	"full_name" varchar(255),
 	"password" varchar(255),
+	"role" "status" DEFAULT 'user',
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email"),

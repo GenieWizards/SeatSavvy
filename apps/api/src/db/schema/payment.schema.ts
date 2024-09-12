@@ -1,8 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { showSeatStatus } from "@seatsavvy/types";
-import { pgEnum, pgTable, real, timestamp, varchar } from "drizzle-orm/pg-core";
-
-export const seatStatusEnum = pgEnum("status", showSeatStatus);
+import { pgTable, real, timestamp, varchar } from "drizzle-orm/pg-core";
 
 const paymentSchema = pgTable("payments", {
   id: varchar("id", { length: 255 })

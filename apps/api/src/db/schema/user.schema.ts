@@ -1,8 +1,10 @@
 import { createId } from "@paralleldrive/cuid2";
+import { AuthRole, AuthRoles } from "@seatsavvy/types";
 import type { SQL } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 import {
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -11,6 +13,8 @@ import {
 } from "drizzle-orm/pg-core";
 import { createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
+
+export const authRolesEnum = pgEnum("status", AuthRoles);
 
 const userSchema = pgTable(
   "users",
@@ -23,6 +27,7 @@ const userSchema = pgTable(
     username: varchar("username", { length: 255 }).notNull().unique(),
     fullName: varchar("full_name", { length: 255 }),
     password: varchar("password", { length: 255 }),
+    role: authRolesEnum("role").default(AuthRole.USER),
 
     createdAt: timestamp("created_at", { mode: "string" })
       .notNull()
