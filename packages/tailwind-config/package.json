@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    ".": "./tailwind.config.ts"
+    ".": "./tailwind.config.js"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.11",
-    "@seatsavvy/typescript-config": "*"
+    "tailwindcss": "^3.4.11"
   }
 }
