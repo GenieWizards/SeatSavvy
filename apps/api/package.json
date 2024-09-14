@@ -7,7 +7,7 @@
     "build": "npm run clean && tsc && tsc-alias",
     "build:start": "npm run build && npm run start",
     "clean": "rm -rf dist",
-    "dev": "NODE_ENV=development tsx watch src/server.ts",
+    "dev": "NODE_ENV=development tsx watch --inspect src/server.ts",
     "lint": "tsc --noEmit && eslint \"src/**/*.ts*\" --max-warnings 0",
     "start": "NODE_ENV=production node dist/src/server.js",
     "test": "jest --detectOpenHandles",

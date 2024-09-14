@@ -1,30 +1,36 @@
-version: "3"
-
 services:
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - seatsavvy
-  api:
-    container_name: api
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
-    restart: always
-    ports:
-      - 5500:5500
-    networks:
-      - seatsavvy
+  # web:
+  #   container_name: web
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/web/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./apps/web:/app/apps/web
+  #     - /app/apps/web/node_modules
+  #   networks:
+  #     - seatsavvy
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/api/Dockerfile
+  #   depends_on:
+  #     - db
+  #   restart: always
+  #   ports:
+  #     - 5500:5500
+  #   volumes:
+  #     - ./apps/api:/app/apps/api
+  #     - /app/apps/api/node_modules
+  #   networks:
+  #     - seatsavvy
 
   db:
     container_name: seatsavvy_db
-    image: postgres:17
+    image: postgres
     restart: always
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -41,4 +47,3 @@ services:
 # with each other, by using their container name as a hostname
 networks:
   seatsavvy:
-    external: true

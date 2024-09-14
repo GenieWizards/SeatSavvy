@@ -44,4 +44,4 @@ RUN adduser --system --uid 1001 honojs
 USER honojs
 COPY --from=installer /app .
 
-CMD node apps/api/dist/index.js
+CMD ["node", "apps/api/dist/src/server.js"]
