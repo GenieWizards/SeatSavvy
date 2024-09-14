@@ -1,5 +1,7 @@
 import z from "zod";
 
+import type { ICommon } from "./common.validations";
+
 export const CreateUserBodySchema = z.object({
   id: z.string().optional(),
   username: z
@@ -48,5 +50,7 @@ export const LoginUserBodySchema = CreateUserBodySchema.omit({
   email: z.string().email("Invalid email address").optional(),
 });
 
-export type TCreateUserBodyResponse = z.infer<typeof CreateUserBodySchema>;
-export type TLoginUserBodyResponse = z.infer<typeof LoginUserBodySchema>;
+export type TCreateUserBodyResponse = z.infer<typeof CreateUserBodySchema> &
+  ICommon;
+export type TLoginUserBodyResponse = z.infer<typeof LoginUserBodySchema> &
+  ICommon;
