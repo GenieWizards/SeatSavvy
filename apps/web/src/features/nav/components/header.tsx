@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/container";
 export const Header = () => {
   return (
     <Container>
-      <nav className="flex items-center justify-between p-2">
+      <nav className="flex items-center justify-between py-2">
         <Link href="/" className="flex items-center justify-center gap-1">
           <Image
             alt="Seat Savvy Logo"
