@@ -1,11 +1,12 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
+import { CardSection } from "@/features/cards/components/card-section";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>Hello World</Button>
+    <main className="">
+      <h2 className="px-2 text-xl font-bold">Recommended</h2>
+      <CardSection />
     </main>
   );
 }
