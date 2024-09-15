@@ -94,6 +94,7 @@ module.exports = {
         "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
         "no-console": "warn",
         "tailwindcss/no-custom-classname": "off",
+        "import/no-unresolved": "off",
         // "@next/next/no-html-link-for-pages": ["error", "app/"],
       },
     },
