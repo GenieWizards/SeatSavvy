@@ -3,10 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { TLoginUserBodyResponse } from "@seatsavvy/types";
 import { LoginUserBodySchema } from "@seatsavvy/types";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -30,6 +31,23 @@ import { Input } from "@/components/ui/input";
 
 import { onLoginSubmitAction } from "../actions/login.action";
 
+const LoginSubmitButton = ({ isValid }: { isValid: boolean }) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="w-full" disabled={!isValid || pending}>
+      {pending ? (
+        <div className="flex items-center gap-2">
+          <Loader2 className="animate-spin" />
+          <span>Please wait...</span>
+        </div>
+      ) : (
+        "Login"
+      )}
+    </Button>
+  );
+};
+
 export function LoginForm() {
   const [loginState, loginFormAction] = useFormState(onLoginSubmitAction, {
     type: "",
@@ -39,7 +57,8 @@ export function LoginForm() {
   const router = useRouter();
 
   const form = useForm<TLoginUserBodyResponse>({
-    mode: "onBlur",
+    mode: "onChange",
+    reValidateMode: "onChange",
     resolver: zodResolver(LoginUserBodySchema),
     defaultValues: {
       username: "",
@@ -56,7 +75,6 @@ export function LoginForm() {
 
   return (
     <Container>
-      {loginState.type !== "" && <span>{loginState.message}</span>}
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -70,12 +88,6 @@ export function LoginForm() {
               <form
                 ref={loginFormRef}
                 action={loginFormAction}
-                onSubmit={(evt) => {
-                  evt.preventDefault();
-                  form.handleSubmit(() => {
-                    loginFormAction(new FormData(loginFormRef.current!));
-                  })(evt);
-                }}
                 className="max-w-sm space-y-4"
               >
                 <FormField
@@ -107,9 +119,7 @@ export function LoginForm() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
-                  Login
-                </Button>
+                <LoginSubmitButton isValid={form.formState.isValid} />
               </form>
             </FormProvider>
             <Button variant="outline" className="w-full" disabled>
