@@ -20,14 +20,14 @@ export const Header = () => {
 
         <ul className="flex items-center gap-2">
           <li>
-            <Button variant="outline">
-              <Link href={"/login"}>Login</Link>
-            </Button>
+            <Link href={"/login"}>
+              <Button variant="outline">Login</Button>
+            </Link>
           </li>
           <li>
-            <Button>
-              <Link href={"/register"}>Register</Link>
-            </Button>
+            <Link href={"/register"}>
+              <Button>Register</Button>
+            </Link>
           </li>
         </ul>
       </nav>

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
 
+import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/features/nav/components/header";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Toaster richColors />
       </body>
     </html>
   );
