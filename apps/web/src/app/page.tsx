@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { CardSection } from "@/features/cards/components/card-section";
