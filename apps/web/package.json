@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@seatsavvy/ui": "*",
@@ -19,9 +20,11 @@
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@seatsavvy/eslint-config": "*",
