@@ -49,12 +49,10 @@ export function LoginForm() {
 
   const loginFormRef = useRef<HTMLFormElement>(null);
 
-  // useEffect(() => {
   if (loginState.type === "success") {
     router.push("/");
     toast(loginState.message);
   }
-  // }, []);
 
   return (
     <Container>
