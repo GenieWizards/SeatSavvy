@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
+import { logger } from "@seatsavvy/logger";
 import {
   CreateUserBodySchema,
   HTTP_CODE,
@@ -91,22 +92,35 @@ authRoutes.post(
     let userExists: TSelectUserSchema[];
     const payload = c.req.valid("json");
 
+    logger.debug(payload);
+
     if (userSession) {
       userExists = await authRepository.findByUsernameOrEmail(payload);
 
-      return c.json(
-        {
-          success: true,
-          message: "Already logged in",
-          data: {
-            id: userExists[0].id,
-            username: userExists[0].username,
-            email: userExists[0].email,
-            fullName: userExists[0].fullName,
+      if (
+        payload.username !== userSession.username ||
+        payload.username !== userSession.email
+      ) {
+        await lucia.invalidateSession(userSession.id);
+
+        c.header("Set-Cookie", lucia.createBlankSessionCookie().serialize(), {
+          append: true,
+        });
+      } else {
+        return c.json(
+          {
+            success: true,
+            message: "Already logged in",
+            data: {
+              id: userExists[0].id,
+              username: userExists[0].username,
+              email: userExists[0].email,
+              fullName: userExists[0].fullName,
+            },
           },
-        },
-        HTTP_CODE.OK,
-      );
+          HTTP_CODE.OK,
+        );
+      }
     }
 
     userExists = await authRepository.findByUsernameOrEmail(payload);

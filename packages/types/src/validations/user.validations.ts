@@ -45,7 +45,7 @@ export const LoginUserBodySchema = CreateUserBodySchema.omit({
       required_error: "username/email is required",
     })
     .trim()
-    .min(5, "username should be atleast 5 characters")
+    .min(5, "username/email should be atleast 5 characters")
     .toLowerCase(),
   email: z.string().email("Invalid email address").optional(),
 });
