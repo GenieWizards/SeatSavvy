@@ -190,3 +190,47 @@ authRoutes.post("/logout", async (c) => {
 
   return c.body(null, HTTP_CODE.NO_CONTENT);
 });
+
+/**
+ * Get logged in user details.
+ *
+ * @route GET /api/v1/auth/me
+ * @param {Object} c - HonoJS context object.
+ * @returns JSON response with success or error message.
+ */
+authRoutes.get("/me", async (c) => {
+  const session = c.get("session");
+  const userSession = c.get("user");
+
+  if (!session?.id || !userSession?.id) {
+    throw new AppError({
+      code: HTTP_STATUS.UNAUTHORIZED,
+      message: "You are not authorized, please login",
+    });
+  }
+
+  const userExists = await authRepository.findByUsernameOrEmail({
+    username: userSession?.email || "",
+  });
+
+  if (!userExists?.length) {
+    throw new AppError({
+      code: HTTP_STATUS.UNAUTHORIZED,
+      message: "You are not authorized, please login",
+    });
+  }
+
+  return c.json(
+    {
+      success: true,
+      message: "Logged in user details",
+      data: {
+        id: userExists[0].id,
+        username: userExists[0].username,
+        email: userExists[0].email,
+        fullName: userExists[0].fullName,
+      },
+    },
+    HTTP_CODE.OK,
+  );
+});
