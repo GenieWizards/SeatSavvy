@@ -1,5 +1,8 @@
 "use server";
 
+import cookie from "cookie";
+import { cookies } from "next/headers";
+
 export type TLoginActionResponse = {
   type: string;
   message: string;
@@ -35,8 +38,17 @@ export async function onLoginSubmitAction(
         message: error?.error?.message,
       };
     }
+    const headerCookies = resp.headers.getSetCookie();
 
-    // TODO: Set session token in cookie securely
+    const parsedCookies = cookie.parse(headerCookies[0]);
+
+    // NOTE: Add any other cookie flags (If needed)
+    cookies().set("auth_session", parsedCookies.auth_session, {
+      maxAge: Number(parsedCookies["Max-Age"]),
+      httpOnly: true,
+      sameSite: parsedCookies.SameSite as any,
+      secure: Boolean(parsedCookies.secure),
+    });
 
     return {
       type: "success",
