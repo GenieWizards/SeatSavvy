@@ -54,6 +54,18 @@ module.exports = {
     "no-unused-vars": "warn",
     "@typescript-eslint/comma-dangle": "off",
     "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "interface",
+        format: ["PascalCase"],
+        prefix: ["I"],
+      },
+      {
+        selector: "class",
+        format: ["PascalCase"],
+      },
+    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "@typescript-eslint/no-unused-vars": "warn",

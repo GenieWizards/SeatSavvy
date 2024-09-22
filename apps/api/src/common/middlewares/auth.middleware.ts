@@ -40,7 +40,7 @@ export function authMiddleware(): MiddlewareHandler {
   };
 }
 
-export interface Context extends Env {
+export interface IContext extends Env {
   Variables: {
     user: User | null;
     session: Session | null;

@@ -26,6 +26,7 @@ export const lucia = new Lucia(adapter, {
 });
 
 declare module "lucia" {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: {
