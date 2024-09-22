@@ -80,6 +80,18 @@ module.exports = {
         "react/jsx-props-no-spreading": "off",
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/naming-convention": [
+          "error",
+          // {
+          //   selector: "interface",
+          //   format: ["PascalCase"],
+          //   prefix: ["I"],
+          // },
+          {
+            selector: "class",
+            format: ["PascalCase"],
+          },
+        ],
         "no-restricted-syntax": [
           "error",
           "ForInStatement",

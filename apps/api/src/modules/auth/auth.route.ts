@@ -10,13 +10,13 @@ import { compare, hash } from "bcrypt";
 import { Hono } from "hono";
 
 import { lucia } from "@/common/lib/luciaAdapter.lib";
-import type { Context } from "@/common/middlewares";
+import type { IContext } from "@/common/middlewares";
 import { AppError } from "@/common/utils/appErr.util";
 import type { TSelectUserSchema } from "@/db/schema/user.schema";
 
 import authRepository from "./auth.repository";
 
-export const authRoutes = new Hono<Context>();
+export const authRoutes = new Hono<IContext>();
 
 /**
  * Registers a new user.

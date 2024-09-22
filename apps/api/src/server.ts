@@ -6,12 +6,12 @@ import { showRoutes } from "hono/dev";
 import { logger as honoLogger } from "hono/logger";
 
 import { handleError } from "./common/handlers/errors.handler";
-import type { Context } from "./common/middlewares";
+import type { IContext } from "./common/middlewares";
 import { authMiddleware, cors, csrf, init } from "./common/middlewares";
 import { env } from "./env";
 import { authRoutes } from "./modules/auth/auth.route";
 
-const app = new Hono<Context>();
+const app = new Hono<IContext>();
 
 // Built-In middlewares
 app.use(honoLogger());
