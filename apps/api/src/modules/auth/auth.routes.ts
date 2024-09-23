@@ -229,6 +229,7 @@ authRoutes.get("/me", async (c) => {
         username: userExists[0].username,
         email: userExists[0].email,
         fullName: userExists[0].fullName,
+        role: userExists[0].role,
       },
     },
     HTTP_CODE.OK,
