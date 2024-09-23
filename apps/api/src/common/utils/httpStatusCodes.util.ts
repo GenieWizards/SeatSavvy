@@ -44,6 +44,8 @@ export function statusToCode(status: StatusCode): z.infer<typeof ErrorCode> {
       return HTTP_STATUS.NOT_FOUND;
     case 405:
       return HTTP_STATUS.METHOD_NOT_ALLOWED;
+    case 409:
+      return HTTP_STATUS.NOT_UNIQUE;
     case 500:
       return HTTP_STATUS.INTERNAL_SERVER_ERROR;
     default:
