@@ -19,6 +19,7 @@ export function handleError(err: Error, c: Context): Response {
         name: err.name,
         code: HTTP_STATUS.BAD_REQUEST,
         status: HTTP_CODE.BAD_REQUEST,
+        errorObj: err,
       },
       "returning 400 Zod error",
     );
@@ -50,6 +51,7 @@ export function handleError(err: Error, c: Context): Response {
           code: err.code,
           status: err.status,
           cause: err.cause,
+          errorObj: err,
         },
         "returning 5XX",
       );
@@ -80,6 +82,7 @@ export function handleError(err: Error, c: Context): Response {
           message: err.message,
           status: err.status,
           requestId: c.get("requestId"),
+          errorObj: err,
         },
         "HTTPException",
       );
@@ -96,6 +99,36 @@ export function handleError(err: Error, c: Context): Response {
         },
       },
       { status: err.status },
+    );
+  }
+
+  /**
+   * DB Error from Drizzle at least give us some idea of what to do as they provide a message
+   */
+  if (err?.message?.includes("duplicate")) {
+    logger.error(
+      {
+        success: false,
+        message: err.message,
+        status: HTTP_CODE.NOT_UNIQUE,
+        requestId: c.get("requestId"),
+        errorObj: err,
+      },
+      "Error Instance",
+    );
+
+    const code = statusToCode(HTTP_CODE.NOT_UNIQUE);
+    return c.json<z.infer<typeof ErrorSchema>>(
+      {
+        error: {
+          success: false,
+          code,
+          docs: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${HTTP_CODE.NOT_UNIQUE}`,
+          message: err.message,
+          requestId: c.get("requestId"),
+        },
+      },
+      { status: HTTP_CODE.NOT_UNIQUE },
     );
   }
 
