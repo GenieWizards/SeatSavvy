@@ -8,6 +8,7 @@ import { logger as honoLogger } from "hono/logger";
 import { handleError } from "./common/handlers/errors.handler";
 import type { IContext } from "./common/middlewares";
 import { authMiddleware, cors, csrf, init } from "./common/middlewares";
+import { connection } from "./db";
 import { env } from "./env";
 import { authRoutes } from "./modules/auth/auth.route";
 
@@ -51,9 +52,33 @@ app.notFound((c) => {
 if (env.NODE_ENV === "development")
   showRoutes(app, { verbose: true, colorize: true });
 
-logger.info(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
-
-serve({
+const server = serve({
   fetch: app.fetch,
   port: env.PORT,
 });
+
+// Graceful shutdown
+async function gracefulShutdown() {
+  logger.info("Shutting down gracefully");
+
+  // Close the HTTP server
+  server.close(() => {
+    logger.info("HTTP Server closed");
+  });
+
+  try {
+    await connection.end();
+    logger.info("Database connection closed");
+  } catch (err) {
+    logger.error(err, "Error closing database connection");
+  }
+
+  process.exit(0);
+}
+
+process.on("SIGINT", gracefulShutdown);
+process.on("SIGTERM", gracefulShutdown);
+
+logger.info(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
+
+export { server };
