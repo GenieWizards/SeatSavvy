@@ -12,7 +12,7 @@ const citySchema = pgTable(
       .primaryKey()
       .notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    state: varchar("state", { length: 255 }).notNull().unique(),
+    state: varchar("state", { length: 255 }).notNull(),
 
     createdAt: timestamp("created_at", { mode: "string" })
       .notNull()
