@@ -10,7 +10,7 @@ import type { IContext } from "./common/middlewares";
 import { authMiddleware, cors, csrf, init } from "./common/middlewares";
 import { connection } from "./db";
 import { env } from "./env";
-import { authRoutes } from "./modules/auth/auth.route";
+import { authRoutes } from "./modules/auth/auth.routes";
 
 const app = new Hono<IContext>();
 
