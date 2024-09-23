@@ -1,8 +1,10 @@
+import { type AuthRole, HTTP_STATUS } from "@seatsavvy/types";
 import type { Env, MiddlewareHandler } from "hono";
 import { getCookie } from "hono/cookie";
 import type { Session, User } from "lucia";
 
 import { lucia } from "../lib/luciaAdapter.lib";
+import { AppError } from "../utils/appErr.util";
 
 export function authMiddleware(): MiddlewareHandler {
   return async (c, next) => {
@@ -36,7 +38,51 @@ export function authMiddleware(): MiddlewareHandler {
     c.set("user", user);
     c.set("session", session);
 
-    return next();
+    return await next();
+  };
+}
+
+export function requireAuth(): MiddlewareHandler {
+  return async (c, next) => {
+    const user = c.get("user");
+
+    if (!user) {
+      throw new AppError({
+        code: HTTP_STATUS.UNAUTHORIZED,
+        message: "You are not authorized, please login",
+      });
+    }
+
+    return await next();
+  };
+}
+
+export function checkRoleGuard(...allowedRoles: AuthRole[]): MiddlewareHandler {
+  return async (c, next) => {
+    const user = c.get("user");
+
+    if (!user) {
+      throw new AppError({
+        code: HTTP_STATUS.UNAUTHORIZED,
+        message: "You are not authorized, please login",
+      });
+    }
+
+    if (!user.role) {
+      throw new AppError({
+        code: HTTP_STATUS.FORBIDDEN,
+        message: "You are not allowed to perform this action",
+      });
+    }
+
+    if (!allowedRoles.includes(user.role)) {
+      throw new AppError({
+        code: HTTP_STATUS.FORBIDDEN,
+        message: "You are not allowed to perform this action",
+      });
+    }
+
+    await next();
   };
 }
 
