@@ -11,6 +11,7 @@ import { authMiddleware, cors, csrf, init } from "./common/middlewares";
 import { connection } from "./db";
 import { env } from "./env";
 import { authRoutes } from "./modules/auth/auth.routes";
+import { cityRoutes } from "./modules/city/city.routes";
 
 const app = new Hono<IContext>();
 
@@ -37,6 +38,7 @@ app.get("/ping", (c) => {
 });
 
 app.route("/api/v1/auth", authRoutes);
+app.route("/api/v1/cities", cityRoutes);
 
 // global routes
 app.notFound((c) => {
