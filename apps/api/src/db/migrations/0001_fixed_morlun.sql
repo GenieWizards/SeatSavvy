@@ -1,0 +1,1 @@
+ALTER TABLE "city" DROP CONSTRAINT "city_state_unique";
