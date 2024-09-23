@@ -1,8 +1,17 @@
 import { zValidator } from "@hono/zod-validator";
-import { CreateCityBodySchema, HTTP_CODE, HTTP_STATUS } from "@seatsavvy/types";
+import {
+  AuthRole,
+  CreateCityBodySchema,
+  HTTP_CODE,
+  HTTP_STATUS,
+} from "@seatsavvy/types";
 import { Hono } from "hono";
 
-import { type IContext, requireAuth } from "@/common/middlewares";
+import {
+  checkRoleGuard,
+  type IContext,
+  requireAuth,
+} from "@/common/middlewares";
 import { AppError } from "@/common/utils/appErr.util";
 
 import cityRepository from "./city.repository";
@@ -21,6 +30,7 @@ export const cityRoutes = new Hono<IContext>();
 cityRoutes.post(
   "/",
   requireAuth(),
+  checkRoleGuard(AuthRole.ADMIN),
   zValidator("json", CreateCityBodySchema),
   async (c) => {
     const payload = c.req.valid("json");
