@@ -7,7 +7,7 @@ import { logger as honoLogger } from "hono/logger";
 
 import { handleError } from "./common/handlers/errors.handler";
 import type { IContext } from "./common/middlewares";
-import { authMiddleware, cors, csrf, init } from "./common/middlewares";
+import { cors, csrf, init } from "./common/middlewares";
 import { connection } from "./db";
 import { env } from "./env";
 import { authRoutes } from "./modules/auth/auth.routes";
@@ -22,7 +22,6 @@ app.use("*", cors());
 
 // Custom middlewares
 app.use("*", init());
-app.use("*", authMiddleware());
 
 // Global Error handler
 app.onError(handleError);
