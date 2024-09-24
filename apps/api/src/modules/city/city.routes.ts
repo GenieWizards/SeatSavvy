@@ -8,6 +8,7 @@ import {
 import { Hono } from "hono";
 
 import {
+  authMiddleware,
   checkRoleGuard,
   type IContext,
   requireAuth,
@@ -29,6 +30,7 @@ export const cityRoutes = new Hono<IContext>();
  */
 cityRoutes.post(
   "/",
+  authMiddleware(),
   requireAuth(),
   checkRoleGuard(AuthRole.ADMIN),
   zValidator("json", CreateCityBodySchema),

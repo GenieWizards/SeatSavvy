@@ -10,7 +10,7 @@ import { compare, hash } from "bcrypt";
 import { Hono } from "hono";
 
 import { lucia } from "@/common/lib/luciaAdapter.lib";
-import type { IContext } from "@/common/middlewares";
+import { authMiddleware, type IContext } from "@/common/middlewares";
 import { AppError } from "@/common/utils/appErr.util";
 import type { TSelectUserSchema } from "@/db/schema/user.schema";
 
@@ -85,6 +85,7 @@ authRoutes.post(
  */
 authRoutes.post(
   "/login",
+  authMiddleware(),
   zValidator("json", LoginUserBodySchema),
   async (c) => {
     const userSession = c.get("user");
@@ -175,7 +176,7 @@ authRoutes.post(
  * @param {Object} c - HonoJS context object.
  * @returns NA
  */
-authRoutes.post("/logout", async (c) => {
+authRoutes.post("/logout", authMiddleware(), async (c) => {
   const session = c.get("session");
 
   if (!session) {
@@ -198,7 +199,7 @@ authRoutes.post("/logout", async (c) => {
  * @param {Object} c - HonoJS context object.
  * @returns JSON response with success or error message.
  */
-authRoutes.get("/me", async (c) => {
+authRoutes.get("/me", authMiddleware(), async (c) => {
   const session = c.get("session");
   const userSession = c.get("user");
 
