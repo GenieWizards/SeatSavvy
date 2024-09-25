@@ -1,5 +1,6 @@
 import type { TCityQuery, TCreateCityBodyResponse } from "@seatsavvy/types";
-import { and, eq, ilike, or } from "drizzle-orm";
+import type { SQL } from "drizzle-orm";
+import { and, eq, ilike, or, sql } from "drizzle-orm";
 
 import filterUtil from "@/common/utils/filter.util";
 import { db } from "@/db";
@@ -21,7 +22,7 @@ const findByCityAndState = async (cityName: string, stateName: string) => {
 };
 
 const findAll = async (queryData: TCityQuery) => {
-  const { limit, page, search } = filterUtil.set(queryData);
+  const { limit, sort = "name", page, search } = filterUtil.set(queryData);
 
   const dbQuery = db.select().from(citySchema);
 
@@ -40,7 +41,15 @@ const findAll = async (queryData: TCityQuery) => {
   const finalQuery =
     whereClause.length > 0 ? dbQuery.where(and(...whereClause)) : dbQuery;
 
-  const cities = await finalQuery.limit(limit).offset((page - 1) * limit);
+  const orderByColumn: SQL =
+    sort in citySchema
+      ? sql`${citySchema[sort as keyof typeof citySchema]}`
+      : sql`${citySchema.name}`;
+
+  const cities = await finalQuery
+    .orderBy(orderByColumn)
+    .limit(limit)
+    .offset((page - 1) * limit);
 
   return cities;
 };
