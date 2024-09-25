@@ -1,6 +1,7 @@
 import z from "zod";
 
-import type { ICommon } from "./common.validations";
+import { ECitySortFields } from "../enums/city.enums";
+import { CommonQuerySchema, type ICommon } from "./common.validations";
 
 export const CreateCityBodySchema = z.object({
   id: z.string().optional(),
@@ -26,5 +27,16 @@ export const CreateCityBodySchema = z.object({
     .toLowerCase(),
 });
 
+export const CityQuerySchema = CommonQuerySchema.omit({
+  price: true,
+  category: true,
+  fromDate: true,
+  toDate: true,
+  location: true,
+}).extend({
+  sort: z.nativeEnum(ECitySortFields).optional(),
+});
+
 export type TCreateCityBodyResponse = z.infer<typeof CreateCityBodySchema> &
   ICommon;
+export type TCityQuery = z.infer<typeof CityQuerySchema>;

@@ -1,0 +1,23 @@
+meta {
+  name: Get Cities
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:5500/api/v1/cities?page=1&limit=1
+  body: json
+  auth: none
+}
+
+params:query {
+  page: 1
+  limit: 1
+}
+
+body:json {
+  {
+    "name": "hyderabad",
+    "state": "Telangana"
+  }
+}
