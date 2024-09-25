@@ -1,4 +1,6 @@
 export enum ECitySortFields {
-  CITY = "city",
+  NAME = "name",
   STATE = "state",
+  CREATED_AT = "createdAt",
+  UPDATED_AT = "updatedAt",
 }
