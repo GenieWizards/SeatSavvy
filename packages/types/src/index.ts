@@ -6,5 +6,6 @@ export * from "./enums/media.enums";
 export * from "./enums/role.enums";
 export * from "./enums/status.enums";
 export * from "./validations/city.validations";
+export * from "./validations/common.validations";
 export * from "./validations/error.validations";
 export * from "./validations/user.validations";

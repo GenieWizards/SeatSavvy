@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import {
   AuthRole,
+  CityQuerySchema,
   CreateCityBodySchema,
   HTTP_CODE,
   HTTP_STATUS,
@@ -68,3 +69,25 @@ cityRoutes.post(
     );
   },
 );
+
+/**
+ * Get cities.
+ *
+ * @route GET /api/v1/cities
+ * @param {Object} c - HonoJS context object.
+ * @returns JSON response with success or error message.
+ */
+cityRoutes.get("/", zValidator("query", CityQuerySchema), async (c) => {
+  const queryParams = c.req.valid("query");
+
+  const cities = await cityRepository.findAll(queryParams);
+
+  return c.json(
+    {
+      success: true,
+      message: "Cities fetched successfully",
+      data: cities,
+    },
+    HTTP_CODE.OK,
+  );
+});
